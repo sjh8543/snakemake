@@ -2570,7 +2570,8 @@ class DAG:
                         f"    To inspect which output files have changes, run 'snakemake --list-{change_type}-changes'."
                         f"{rerun_trigger}"
                     )
-	  def save_github_sources(self, basedir, f, workdir):
+
+    def save_github_sources(self, basedir, f, workdir):
         from urllib.parse import urlparse
         import requests
         url = basedir.join(f).get_path_or_uri()
