@@ -736,3 +736,21 @@ class Paramspace:
         if isinstance(ret, pd.DataFrame):
             return Paramspace(ret)
         return ret
+
+
+
+def make_github_raw_url(url):
+    from urllib.parse  import urlparse
+    parsed_url = urlparse(url)
+    path_arr = parsed_url.path.split('/')
+    path_arr.remove('raw')
+    return 'https://raw.githubusercontent.com%s'%('/'.join(path_arr)) 
+
+
+def get_github_token():
+    token = None
+    try:
+        token = os.environ['GITHUB_TOKEN']
+    except:
+        token = None
+    return token

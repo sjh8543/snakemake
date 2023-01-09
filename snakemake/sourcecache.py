@@ -443,7 +443,7 @@ class SourceCache:
             )
 
     def _open(self, source_file, mode, encoding=None):
-        from smart_open import open
+        from smart_open import open, http
 
         if isinstance(source_file, LocalGitFile):
             import git
@@ -453,10 +453,18 @@ class SourceCache:
                 .git.show("{}:{}".format(source_file.ref, source_file.path))
                 .encode()
             )
-
+        elif isinstance(source_file, GithubFile):
+            token = utils.get_github_token()
+            if token:
+                try:
+                    path_or_uri = utils.make_github_raw_url(source_file.get_path_or_uri()) 
+                    return http.open(path_or_uri, 'rb', headers={'Authorization': 'token %s'%(token), 'Accept-Encoding':'identity'} )                    
+                except Exception as e:
+                    raise WorkflowError("Failed to open source file {}".format(path_or_uri), e)
+        
         path_or_uri = source_file.get_path_or_uri()
 
         try:
-            return open(path_or_uri, mode, encoding=None if "b" in mode else encoding)
+            return open(path_or_uri, mode, encoding=None if "b" in mode else encoding)            
         except Exception as e:
             raise WorkflowError("Failed to open source file {}".format(path_or_uri), e)

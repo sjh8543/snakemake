@@ -43,6 +43,7 @@ from snakemake import workflow
 from snakemake.sourcecache import (
     LocalSourceFile,
     SourceFile,
+    GithubFile,
 )
 
 
@@ -2580,7 +2581,9 @@ class DAG:
                 return f.get_path_or_uri()
 
         def norm_rule_relpath(f, rule):
-            if not os.path.isabs(f):
+            if isinstance(rule.basedir, GithubFile):
+                f = self.save_github_sources(rule.basedir, f, self.workflow.workdir_init)
+            elif not os.path.isabs(f):
                 f = os.path.join(rule.basedir, f)
             return os.path.relpath(f)
 
@@ -2621,24 +2624,24 @@ class DAG:
 
         # get git-managed files
         # TODO allow a manifest file as alternative
-        try:
-            out = subprocess.check_output(
-                ["git", "ls-files", "--recurse-submodules", "."], stderr=subprocess.PIPE
-            )
-            for f in out.decode().split("\n"):
-                if f:
-                    files.add(os.path.relpath(f))
-        except subprocess.CalledProcessError as e:
-            if "fatal: not a git repository" in e.stderr.decode().lower():
-                logger.warning(
-                    "Unable to retrieve additional files from git. "
-                    "This is not a git repository."
-                )
-            else:
-                raise WorkflowError(
-                    "Error executing git (Snakemake requires git to be installed for "
-                    "remote execution without shared filesystem):\n" + e.stderr.decode()
-                )
+        # try:
+        #     out = subprocess.check_output(
+        #         ["git", "ls-files", "--recurse-submodules", "."], stderr=subprocess.PIPE
+        #     )
+        #     for f in out.decode().split("\n"):
+        #         if f:
+        #             files.add(os.path.relpath(f))
+        # except subprocess.CalledProcessError as e:
+        #     if "fatal: not a git repository" in e.stderr.decode().lower():
+        #         logger.warning(
+        #             "Unable to retrieve additional files from git. "
+        #             "This is not a git repository."
+        #         )
+        #     else:
+        #         raise WorkflowError(
+        #             "Error executing git (Snakemake requires git to be installed for "
+        #             "remote execution without shared filesystem):\n" + e.stderr.decode()
+        #         )
 
         return files
 
