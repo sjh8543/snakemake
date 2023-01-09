@@ -21,3 +21,15 @@ Finally, Snakemake workflows can entail a description of required software, whic
 **Homepage: https://snakemake.github.io**
 
 Copyright (c) 2012-2022 Johannes Köster <johannes.koester@uni-due.com> (see LICENSE)
+
+
+# How to This version install
+```bash
+pip install git+https://github.com/mhb8436/snakemake
+```
+
+# How to private github 
+```bash
+vi ~/.bashrc
+export GITHUB_TOKEN={GITHUB ACCESS TOKEN}
+```
