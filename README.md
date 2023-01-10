@@ -22,14 +22,16 @@ Finally, Snakemake workflows can entail a description of required software, whic
 
 Copyright (c) 2012-2022 Johannes Köster <johannes.koester@uni-due.com> (see LICENSE)
 
-# The GIT_TOKEN error has been fixed in this version.
+# Differences from the original snakemake. 
+The GIT_TOKEN error has been fixed in this version.
+So you can use your private github in snakemake.
 
 # How to This version install
 ```bash
 pip install git+https://github.com/mhb8436/snakemake
 ```
 
-# How to private github 
+# How to use private github 
 ```bash
 vi ~/.bashrc
 export GITHUB_TOKEN={GITHUB ACCESS TOKEN}
