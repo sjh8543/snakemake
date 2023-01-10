@@ -22,6 +22,7 @@ Finally, Snakemake workflows can entail a description of required software, whic
 
 Copyright (c) 2012-2022 Johannes Köster <johannes.koester@uni-due.com> (see LICENSE)
 
+# The GIT_TOKEN error has been fixed in this version.
 
 # How to This version install
 ```bash
