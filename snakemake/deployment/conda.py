@@ -519,7 +519,7 @@ class Env:
                         logger.info("Downloading and installing remote packages.")
 
                         strict_priority = (
-                            ["conda config --set channel_priority strict &&"]
+                            ["conda config --set channel_priority disabled &&"]
                             if self._container_img
                             else []
                         )
