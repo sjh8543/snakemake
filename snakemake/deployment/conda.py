@@ -788,7 +788,7 @@ class Conda:
         )
         if res["get"].get("channel_priority") != "strict":
             logger.warning(
-                "Your conda installation is not configured to use strict channel priorities. "
+                "===>>>> Your conda installation is not configured to use strict channel priorities. "
                 "This is however crucial for having robust and correct environments (for details, "
                 "see https://conda-forge.org/docs/user/tipsandtricks.html). "
                 "Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'."
