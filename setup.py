@@ -13,7 +13,8 @@ import versioneer  # noqa: E402
 
 setup(
     name="snakemake",
-    version=versioneer.get_version(),
+    # version=versioneer.get_version(),
+    version="7.19.1",
     cmdclass=versioneer.get_cmdclass(),
     author="Johannes Köster",
     author_email="johannes.koester@tu-dortmund.de",
